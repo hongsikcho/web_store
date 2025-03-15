@@ -1,0 +1,49 @@
+name: .NET Core Build and Test
+
+on:
+  push:
+    branches:
+      - develop  # develop 브랜치에 푸시될 때마다 실행
+  pull_request:
+    branches:
+      - develop  # develop 브랜치로의 Pull Request 시 실행
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 우분투 환경에서 실행
+
+    steps:
+      # 1단계: 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v2  # GitHub 리포지토리에서 소스 코드를 가져옵니다
+
+      # 2단계: .NET SDK 설정
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0'  # 사용하려는 .NET SDK 버전
+
+      # 3단계: .NET 의존성 복원
+      - name: Restore dependencies
+        run: |
+          dotnet restore  # 프로젝트의 의존성을 복원합니다
+
+      # 4단계: .NET 빌드
+      - name: Build
+        run: |
+          dotnet build --configuration Release  # Release 구성으로 프로젝트를 빌드합니다
+
+      # 5단계: .NET 테스트
+      - name: Test
+        run: |
+          dotnet test  # 단위 테스트를 실행합니다
+
+      # 6단계: Docker 빌드 및 푸시 (옵션)
+      - name: Build and Push Docker image
+        run: |
+          docker build -t my-dotnet-app .
+          docker tag my-dotnet-app:latest yourdockerhubusername/my-dotnet-app:latest
+          docker push yourdockerhubusername/my-dotnet-app:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
