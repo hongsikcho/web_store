@@ -21,8 +21,8 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0'  # 사용하려는 .NET SDK 버전
-
+          dotnet-version: '8.0'  # 사용하려는 .NET SDK 버전
+      
       # 3단계: .NET 의존성 복원
       - name: Restore dependencies
         run: |
