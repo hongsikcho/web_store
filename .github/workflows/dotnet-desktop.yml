@@ -3,10 +3,10 @@ name: .NET Core CI with Docker
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시될 때만 실행
+      - develop  # main 브랜치에 푸시될 때만 실행
   pull_request:
     branches:
-      - main  # main 브랜치로의 Pull Request가 생성될 때 실행
+      - develop  # main 브랜치로의 Pull Request가 생성될 때 실행
 
 jobs:
   build:
