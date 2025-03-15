@@ -38,12 +38,17 @@ jobs:
         run: |
           dotnet test  # 단위 테스트를 실행합니다
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       # 6단계: Docker 빌드 및 푸시 (옵션)
       - name: Build and Push Docker image
         run: |
           docker build -t my-dotnet-app .
-          docker tag my-dotnet-app:latest yourdockerhubusername/my-dotnet-app:latest
-          docker push yourdockerhubusername/my-dotnet-app:latest
+          docker tag my-dotnet-app:latest aaa9758/dockerpractice:latest
+          docker push aaa9758/dockerpractice:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
