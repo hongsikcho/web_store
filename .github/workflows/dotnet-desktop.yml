@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2단계: Docker 설치
+      # 2단계: Docker Buildx 설정 (Docker가 이미 설치되어 있음)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
