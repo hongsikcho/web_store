@@ -27,16 +27,18 @@ jobs:
       # 4단계: Docker 컨테이너 실행
       - name: Run Docker container
         run: |
-          docker run -d -p 8080:80 my-dotnet-app
+          docker run -d -p 8080:80 --name my-dotnet-container my-dotnet-app
+          docker ps  # 실행 중인 컨테이너 목록 확인
+          docker logs my-dotnet-container  # 컨테이너 로그 출력
 
       # 5단계: 컨테이너 내부에서 테스트 실행
       - name: Run tests in the Docker container
         run: |
-          docker exec my-dotnet-app dotnet test
+          docker exec my-dotnet-container dotnet test
 
-      # 6단계: Docker 이미지 푸시 (옵션)
+      # 6단계: Docker 이미지 푸시 (develop 브랜치에서만 푸시)
       - name: Push Docker image to Docker Hub
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/develop'
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag my-dotnet-app:latest yourdockerhubusername/my-dotnet-app:latest
