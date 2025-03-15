@@ -40,6 +40,6 @@ jobs:
       - name: Push Docker image to Docker Hub
         if: github.ref == 'refs/heads/main'
         run: |
-          docker login -u ${{ secrets.aaa9758 }} -p ${{ secrets.roqkfwk1! }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag my-dotnet-app:latest yourdockerhubusername/my-dotnet-app:latest
           docker push yourdockerhubusername/my-dotnet-app:latest
